@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load calendar_tags %}
+
+{% block title %}Dagatal | {{ block.super }}{% endblock %}
+
+{% block content %}
+<h1>Dagatal</h1>
+{% get_calendar current_day.year current_day.month %}
+<h2>Atburðir dagsins {{ current_day|date:"d.m.Y" }}</h2>
+{% get_events_for_day current_day.year current_day.month current_day.day %}
+{% endblock %}
+
+{% block alt_content %}
+<h1>Atburðir mánaðarins</h1>
+{% get_events_for_month current_day.year current_day.month %}
+{% endblock %}

@@ -1,0 +1,33 @@
+<table>
+    <thead>
+        <tr>
+            <th>
+                <a href="{{ month.get_last_month_url }}">&#060;</a>
+            </th>
+            <th id="calendar-month" colspan="5"><a href="{{ month.get_absolute_url }}">{{ month.name}} {{ month.year }}</a></th>
+            <th>
+                <a id="calendar-next" href="{{ month.get_next_month_url }}">&#062;</a>
+            </th>
+        </tr>
+        <tr>
+            {% for weekdayname in month.get_weekdaynames %}
+            <th>{{ weekdayname }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for week in month %}
+            <tr>
+                {% for day in week %}
+                    <td class="{{ day.get_css_classes }}">
+                        {% if day.has_events %}
+                        <a href="{{ day.get_absolute_url }}" title='{{ day.get_event_titles }}'>{{ day }}</a>
+                        {% else %}
+                        {{day}}
+                        {% endif %}
+                     </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,22 @@
+{% if events %}
+<dl>
+    {% for day, events_in_day in events %}
+    <dt>{{ day|date:"d.m.Y" }}</dt>
+    {% regroup events_in_day by event_type as events_sorted_by_type %}
+    <dd>
+        {% for item in events_sorted_by_type %}
+        <h5>{{ item.grouper }}</h5>
+        <ul>
+        {% for event in item.list %}
+            <li><a href="{{ event.url }}">{{ event.name }}</a></li>
+        {% endfor %}
+        </ul>
+        {% endfor %}
+    </dd>
+    {% endfor %}
+</dl>
+{% else %}
+<p class="info">
+Það er engir atburðir í þessum mánuði
+</p>
+{% endif %}

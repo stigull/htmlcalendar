@@ -1,0 +1,22 @@
+{% if events %}
+{% regroup events by event_type as events_sorted_by_type %}
+{% for item in events_sorted_by_type %}
+    <h3>{{ item.grouper }}</h5>
+    <ul>
+    {% for event in item.list %}
+        <li>
+            <h4><a href="{{ event.url }}">{{ event.name }}</a></h4>
+            {% if event.description %}
+            <p>
+                {{ event.description }}
+            </p>
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endfor %}
+{% else %}
+<p class="info">
+Það er engir atburðir þennan dag
+</p>
+{% endif %}
