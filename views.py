@@ -15,8 +15,10 @@ def show_calendar(request, year = None, month = None, day = None):
         month = int(month)
         if day is None and year == now.year and month == now.month:
             day = now.day
-        else:
+        elif day is None:
             day = 1
+        else:
+            day = int(day)
 
     if request.method == "GET":
         context = {'current_day': datetime.date(year, month, day) }
