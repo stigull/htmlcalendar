@@ -2,11 +2,15 @@
     <thead>
         <tr>
             <th>
+                {% if month.get_last_month_url %}
                 <a href="{{ month.get_last_month_url }}">&#060;</a>
+                {% endif %}
             </th>
             <th id="calendar-month" colspan="5"><a href="{{ month.get_absolute_url }}">{{ month.name}} {{ month.year }}</a></th>
             <th>
+                {% if month.get_next_month_url %}
                 <a id="calendar-next" href="{{ month.get_next_month_url }}">&#062;</a>
+                {% endif %}
             </th>
         </tr>
         <tr>

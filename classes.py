@@ -1,4 +1,4 @@
-#coding: utf-8
+# -*- coding: utf-8 -*-
 
 import calendar
 import datetime
@@ -12,7 +12,6 @@ JANUARY = 1
 DECEMBER = 12
 
 class CalendarEventManager(object):
-
     def __init__(self):
         self.event_callbacks = []
 
@@ -34,11 +33,15 @@ class CalendarEventManager(object):
 
 event_manager = CalendarEventManager()
 
+
 class CalendarDay(object):
     def __init__(self, date, is_current_month):
         self.is_current_month = is_current_month
         self.date = date
-        self.events = event_manager.get_events_for(date)
+        if date.year >= 1900:
+            self.events = event_manager.get_events_for(date)
+        else:
+            self.events = []
 
     def is_in_current_month(self):
         return self.is_current_month
@@ -63,8 +66,8 @@ class CalendarDay(object):
 
     def get_absolute_url(self):
         return ('show_calendar_day', (), { 'year': self.date.strftime("%Y"),
-                                           'month': self.date.strftime("%m"),
-                                           'day': self.date.strftime("%d"),
+                                            'month': self.date.strftime("%m"),
+                                            'day': self.date.strftime("%d"),
                                             })
     get_absolute_url = models.permalink(get_absolute_url)
 
@@ -124,7 +127,7 @@ class CalendarMonth(object):
 
     def get_absolute_url(self):
         return ('show_calendar_month', (), { 'year': self.date.strftime("%Y"),
-                                           'month': self.date.strftime("%m"),
+                                            'month': self.date.strftime("%m"),
                                             })
     get_absolute_url = models.permalink(get_absolute_url)
 
@@ -145,9 +148,12 @@ class CalendarMonth(object):
         else:
             year = self.year
             month = self.month -1
-
-        last_month = datetime.date(year, month, 1)
-        return self._get_month_url(last_month)
+            
+        if year < 1900:
+            return None
+        else:
+            last_month = datetime.date(year, month, 1)
+            return self._get_month_url(last_month)
 
     def get_next_month_url(self):
         if self.month == DECEMBER:
